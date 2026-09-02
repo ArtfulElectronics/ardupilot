@@ -45,7 +45,7 @@ define DEFAULT_SERIAL9_PROTOCOL        SerialProtocol_None       #J
 define DEFAULT_SERIAL9_BAUD            (115200/1000)
 
 #Inertial sensors
-define HAL_INS_DEFAULT HAL_INS_NONE
+# define HAL_INS_DEFAULT HAL_INS_NONE
 # define HAL_INS_DEFAULT HAL_INS_MPU9250_I2C
 # define PROBE_IMU_I2C(driver, bus, addr, args ...) ADD_BACKEND(AP_InertialSensor_ ## driver::probe(*this,GET_I2C_DEVICE(bus, addr),##args))
 # define HAL_INS_PROBE_LIST PROBE_IMU_I2C(Invensense, 0, 0x68, ROTATION_NONE)
@@ -55,8 +55,15 @@ define HAL_INS_DEFAULT HAL_INS_NONE
 ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_13  GPIO_NUM_14  400*KHZ  true     true
 
 #SPI Buses
+# SPI Buses; https://docs.espressif.com/projects/esp-idf/en/v5.3.4/esp32/api-reference/peripherals/spi_master.html
+# tip:  VSPI_HOST  is an alternative name for esp's SPI3
+#            Host      DMA Channel     MOSI        MISO        SCLK
+ESP32_SPIBUS VSPI_HOST 1               GPIO_NUM_23 GPIO_NUM_19 GPIO_NUM_18
 
 #SPI Devices
+#            Name                Bus   Device  ChipSel      Mode LoSpeed HiSpeed
+ESP32_SPIDEV bmp280              0     0       GPIO_NUM_26  3    1*MHZ   1*MHZ
+ESP32_SPIDEV mpu9250             0     1       GPIO_NUM_5   0    2*MHZ   8*MHZ
 
 #RMT pin number
 define HAL_ESP32_RMT_RX_PIN_NUMBER 4
@@ -77,11 +84,16 @@ define AP_AIRSPEED_ANALOG_ENABLED 0
 define AP_AIRSPEED_BACKEND_DEFAULT_ENABLED 0
 
 #BAROMETER
+BARO BMP280 SPI:bmp280
 define HAL_BARO_ALLOW_INIT_NO_BARO 1
 
 #IMU
 # define AP_INERTIALSENSOR_ENABLED 1
 # define AP_INERTIALSENSOR_KILL_IMU_ENABLED 0
+IMU Invensense SPI:mpu9250 ROTATION_NONE
+# IMU Invensense SPI:mpu9250 ROTATION_180
+define HAL_INS_DEFAULT HAL_INS_MPU9250_SPI
+define INS_MAX_INSTANCES 3  # only here for binary identicality
 
 #COMPASS
 define AP_COMPASS_ENABLE_DEFAULT 0
