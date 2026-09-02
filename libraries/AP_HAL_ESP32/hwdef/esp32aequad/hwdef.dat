@@ -52,7 +52,7 @@ define DEFAULT_SERIAL9_BAUD            (115200/1000)
 
 #I2C Buses
 #             Port       SDA          SCL          SPEED    INTERNAL SOFT
-ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_13  GPIO_NUM_14  400*KHZ  true     true
+ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_21  GPIO_NUM_22  400*KHZ  true     true
 
 #SPI Buses
 # SPI Buses; https://docs.espressif.com/projects/esp-idf/en/v5.3.4/esp32/api-reference/peripherals/spi_master.html
@@ -96,7 +96,10 @@ define HAL_INS_DEFAULT HAL_INS_MPU9250_SPI
 define INS_MAX_INSTANCES 3  # only here for binary identicality
 
 #COMPASS
-define AP_COMPASS_ENABLE_DEFAULT 0
+#define AP_COMPASS_ENABLE_DEFAULT 0
+#define AP_COMPASS_PROBING_ENABLED 1
+COMPASS AK8963:probe_mpu9250 0 ROTATION_NONE
+COMPASS QMC5883L I2C:0:0xd false ROTATION_NONE
 
 #WIFI
 define HAL_ESP32_WIFI 1  #1-TCP, 2-UDP, comment this line = without wifi
