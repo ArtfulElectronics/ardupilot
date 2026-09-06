@@ -133,3 +133,20 @@ define AP_RCPROTOCOL_ENABLED 0
 # disable all frames for sim on hw except quad to save DRAM .bss
 define AP_MOTORS_FRAME_DEFAULT_ENABLED 0
 define AP_MOTORS_FRAME_QUAD_ENABLED 1
+
+# Global Minimization (Mandatory for classic ESP32)
+define HAL_MINIMIZE_FEATURES 1
+define HAL_WITH_DSP 0
+
+# Disable RAM Heavy Features
+define AP_SCRIPTING_ENABLED 0
+define AP_TERRAIN_AVAILABLE 0
+define AP_SMART_RTL_ENABLED 0
+
+# Disable Unused Hardware/Peripherals
+# define HAL_LOGGING_ENABLED 0
+define HAL_PROXIMITY_ENABLED 0
+define HAL_ADSB_ENABLED 0
+define HAL_MOUNT_ENABLED 0
+define HAL_PARACHUTE_ENABLED 0
+define HAL_SPRAYER_ENABLED 0
