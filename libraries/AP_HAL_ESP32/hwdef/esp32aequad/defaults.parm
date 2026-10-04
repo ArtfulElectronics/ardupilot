@@ -1,2 +1,12 @@
 SCHED_LOOP_RATE 100 # flash won't go faster :(
 SIM_RATE_HZ 100
+
+# Battery Monitor 1 (Main Battery - Voltage Only)
+BATT_MONITOR     3
+BATT_VOLT_PIN    36
+BATT_VOLT_MULT   3.0
+
+# Battery Monitor 2 (Secondary Battery - Voltage Only)
+BATT2_MONITOR    3
+BATT2_VOLT_PIN   39
+BATT2_VOLT_MULT  2.0
